@@ -21,7 +21,6 @@ namespace TestApp2.Models
         }
     
         public int Panier_Id { get; set; }
-        public System.DateTime Date { get; set; }
         public string User_Id { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }

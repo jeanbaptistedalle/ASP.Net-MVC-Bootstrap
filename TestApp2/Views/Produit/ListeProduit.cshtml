@@ -5,31 +5,38 @@
 
 @section Scripts
 {
-<script src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
-<script src="@Url.Content("~/Scripts/dataTables.bootstrap.js")"></script>
-<script src="@Url.Content("~/Scripts/Views/ListeProduit.js")"></script>
-<link href="@Url.Content("~/Content/dataTables.bootstrap.css")" rel="stylesheet" type="text/css" />
 }
 
 <h2>Liste des produits</h2>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <td>ID</td>
-            <td>Libelle</td>
-            <td>Prix</td>
-            <td>Lien</td>
-        </tr>
-    </thead>
-    @foreach (ProduitDTO produit in Model.ListeProduit)
-    {
-    <tr>
-        <td>@produit.Produit_Id</td>
-        <td>@produit.Libelle</td>
-        <td>@produit.Prix</td>
-        <td><a href="@Url.Action("Produit", "produit", new { id=produit.Produit_Id})" class="glyphicon glyphicon-search"></a></td>
-    </tr>
-    }
-</table>
-
-
+<div class="row">
+    <div class="col-xs-4 col-sm-3 col-md-3">
+        Id
+    </div>
+    <div class="col-xs-4 col-sm-3 col-md-3">
+        Libelle
+    </div>
+    <div class="hidden-xs col-sm-3 col-md-3">
+        Prix
+    </div>
+    <div class="col-xs-4 col-sm-3 col-md-3">
+        Lien
+    </div>
+</div>
+@foreach (ProduitDTO produit in Model.ListeProduit)
+{
+    <div class="row">
+        <div class="col-xs-4 col-sm-3 col-md-3">
+            @produit.Produit_Id
+        </div>
+        <div class="col-xs-4 col-sm-3 col-md-3">
+            @produit.Libelle
+        </div>
+        <div class="hidden-xs col-sm-3 col-md-3">
+            @produit.Prix
+        </div>
+        <div class="col-xs-4 col-sm-3 col-md-3">
+            <a href="@Url.Action("Produit", "Produit", new { id=produit.Produit_Id})" class="glyphicon glyphicon-search"></a>
+            <a href="@Url.Action("AcheterProduit", "Produit", new { produit_Id=produit.Produit_Id})" class="glyphicon glyphicon-shopping-cart"></a>
+        </div>
+    </div>
+}

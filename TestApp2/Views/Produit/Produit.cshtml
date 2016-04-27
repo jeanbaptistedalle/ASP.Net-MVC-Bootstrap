@@ -1,16 +1,44 @@
 ﻿@model TestApp2.ViewsModels.Produit.ProduitModel
 @{
-    ViewBag.Title = "Produit";
+    ViewBag.Title = Model.produit.Libelle;
 }
-
-<h2>Produit</h2>
-
-@if (!String.IsNullOrWhiteSpace(Model.produit.Image))
-{
-    <img src="@Model.produit.Image" alt="Pas d'image produit'" />
-}
-@Model.produit.Produit_Id
-@Model.produit.Libelle
-@Model.produit.Prix €
-@Model.produit.Description
-<a href="@Url.Action("ListeProduit", "Produit")">Retour</a>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        @if (!String.IsNullOrWhiteSpace(Model.produit.Image))
+        {
+            <img class="img-responsive img-thumbnail" src="@Model.produit.Image" alt="Pas d'image produit'" />
+        }
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12">
+            <h2>@Model.produit.Libelle</h2>
+        </div>
+        <div class="col-xs-12">
+            <label for="prix">Prix :</label>
+            <span id="prix">@Model.produit.Prix €</span>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(x => x.produit_Id)
+            <div class="col-xs-12">
+                <fieldset class="form-group">
+                    <label for="quantiteSelectionne">Quantité</label>
+                    @Html.DropDownList("quantiteSelectionnee", Model.quantitesDisponibles, new { @class = "form-control" })
+                </fieldset>
+            </div>
+            <div class="col-xs-12">
+                <input type="submit" class="btn btn-primary" value="Ajouter au panier" />
+            </div>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="col-xs-12">
+            <h3>Detail</h3>
+        </div>
+        <div class="col-xs-12">
+            <p>@Model.produit.Description</p>
+        </div>
+    </div>
+</div>

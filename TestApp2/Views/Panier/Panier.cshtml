@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNet.Identity
+@model TestApp2.ViewsModels.Panier.PanierModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Panier</h2>
+@if (Model.PanierProduits.Count() == 0)
+{
+    <span>Le panier est vide</span>
+}
+else
+{
+    using (Html.BeginForm("ViderPanier", "Panier", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-xs-2">Selection</div>
+            <div class="col-xs-2">Libelle</div>
+            <div class="col-xs-2">Prix unitaire</div>
+            <div class="col-xs-2">Quantite</div>
+            <div class="col-xs-2">Prix</div>
+            <div class="col-xs-2">Lien</div>
+        </div>
+        for(int i = 0; i < Model.PanierProduits.Count(); i++)
+        {
+            PanierProduitDTO produit = Model.PanierProduits[i];
+            <div class="row">
+                @Html.HiddenFor(x => x.PanierProduits[i].PanierProduit_Id)
+                <div class="col-xs-2">@Html.CheckBoxFor(x=>x.PanierProduits[i].selectionne)</div>
+                <div class="col-xs-2">@produit.Libelle</div>
+                <div class="col-xs-2">@produit.Prix €</div>
+                <div class="col-xs-2">@produit.Quantite</div>
+                <div class="col-xs-2">@produit.PrixTotal €</div>
+                <div class="col-xs-2 col-sm-2"><a href="@Url.Action("DeletePanierProduit", "Panier", new { PanierProduit_id = produit.PanierProduit_Id })" class="glyphicon glyphicon-trash"></a></div>
+            </div>
+        }
+        <input type="submit" class="btn" value="Supprimer la selection" name="Panier:SupprimerSelection" />
+        <input type="submit" class="btn" value="Vider le panier" name="Panier:ViderPanier" />
+    }
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <label for="prixTotal">Total de la commande : </label>
+            <span id="prixTotal">@Model.PrixTotal €</span>
+        </div>
+    </div>
+}
+

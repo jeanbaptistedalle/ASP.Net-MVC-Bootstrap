@@ -1,8 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("Logout", "auth", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
+    <form method="post">
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
@@ -11,7 +10,7 @@
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Se déconnecter</a></li>
         </ul>
-    }
+    </form>
 }
 else
 {

@@ -12,7 +12,6 @@ namespace TestApp2
         public string Libelle { get; set; }
         public decimal Prix { get; set; }
         public string Description { get; set; }
-
         public string Image { get; set; }
     }
 }

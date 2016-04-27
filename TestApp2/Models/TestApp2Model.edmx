@@ -73,7 +73,6 @@
             <PropertyRef Name="Panier_Id" />
           </Key>
           <Property Name="Panier_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="PanierProduit">
@@ -363,7 +362,6 @@
             <PropertyRef Name="Panier_Id" />
           </Key>
           <Property Name="Panier_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="User_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="TestApp2Model.FK_Pannier_User" FromRole="Panier" ToRole="AspNetUsers" />
           <NavigationProperty Name="PanierProduit" Relationship="TestApp2Model.FK_PanierProduit_Panier" FromRole="Panier" ToRole="PanierProduit" />
@@ -501,7 +499,6 @@
             <EntityTypeMapping TypeName="TestApp2Model.Panier">
               <MappingFragment StoreEntitySet="Panier">
                 <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Panier_Id" ColumnName="Panier_Id" />
               </MappingFragment>
             </EntityTypeMapping>
