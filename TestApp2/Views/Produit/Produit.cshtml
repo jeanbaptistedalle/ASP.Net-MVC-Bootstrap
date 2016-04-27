@@ -1,0 +1,16 @@
+﻿@model TestApp2.ViewsModels.Produit.ProduitModel
+@{
+    ViewBag.Title = "Produit";
+}
+
+<h2>Produit</h2>
+
+@if (!String.IsNullOrWhiteSpace(Model.produit.Image))
+{
+    <img src="@Model.produit.Image" alt="Pas d'image produit'" />
+}
+@Model.produit.Produit_Id
+@Model.produit.Libelle
+@Model.produit.Prix €
+@Model.produit.Description
+<a href="@Url.Action("ListeProduit", "Produit")">Retour</a>
