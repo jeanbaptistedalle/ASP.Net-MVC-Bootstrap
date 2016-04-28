@@ -41,6 +41,49 @@ namespace TestApp2.DAL
             }
         }
 
+        public static void AjoutePanierProduit(int panierProduit_Id, int qte)
+        {
+            using (var context = new TestApp2Entities())
+            {
+                PanierProduit p = context.PanierProduit.FirstOrDefault(x => x.PanierProduit_Id == panierProduit_Id);
+                if (p != null)
+                {
+                    p.Quantite += qte;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        internal static void SupprimerPanierProduit(int panierProduit_Id)
+        {
+            using (var context = new TestApp2Entities())
+            {
+                PanierProduit p = context.PanierProduit.FirstOrDefault(x => x.PanierProduit_Id == panierProduit_Id);
+                if (p != null)
+                {
+                    context.PanierProduit.Remove(p);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public static void RetirePanierProduit(int panierProduit_Id, int qte)
+        {
+            using (var context = new TestApp2Entities())
+            {
+                PanierProduit p = context.PanierProduit.FirstOrDefault(x => x.PanierProduit_Id == panierProduit_Id);
+                if (p != null)
+                {
+                    p.Quantite += qte;
+                    if (p.Quantite <= 0)
+                    {
+                        context.PanierProduit.Remove(p);
+                    }
+                    context.SaveChanges();
+                }
+            }
+        }
+
         public static void Supprimer(List<int> PanierProduit_Ids)
         {
             using (var context = new TestApp2Entities())

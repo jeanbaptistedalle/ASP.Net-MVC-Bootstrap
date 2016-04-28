@@ -32,11 +32,32 @@ namespace TestApp2.Controllers
             return RedirectToAction("Panier", "Panier");
         }
 
+        [HttpGet]
+        public ActionResult AjoutePanierProduit(int PanierProduit_Id)
+        {
+            DAL_PanierProduit.AjoutePanierProduit(PanierProduit_Id, 1);
+            return RedirectToAction("Panier", "Panier");
+        }
+
+        [HttpGet]
+        public ActionResult RetirePanierProduit(int PanierProduit_Id)
+        {
+            DAL_PanierProduit.RetirePanierProduit(PanierProduit_Id, 1);
+            return RedirectToAction("Panier", "Panier");
+        }
+        
+        [HttpGet]
+        public ActionResult SupprimerPanierProduit(int PanierProduit_Id)
+        {
+            DAL_PanierProduit.SupprimerPanierProduit(PanierProduit_Id);
+            return RedirectToAction("Panier", "Panier");
+        }
+        
         [HttpPost]
         [MultipleButton(Name = "Panier", Argument = "SupprimerSelection")]
         public ActionResult SupprimerSelection(PanierModel model)
         {
-            DAL_PanierProduit.Supprimer(model.PanierProduits.Where(x=>x.selectionne).Select(x => x.PanierProduit_Id).ToList());
+            DAL_PanierProduit.Supprimer(model.PanierProduits.Where(x => x.selectionne).Select(x => x.PanierProduit_Id).ToList());
             return RedirectToAction("Panier", "Panier");
         }
     }

@@ -16,3 +16,25 @@ textarea {
     max-width: 280px;
 }
 
+a.glyphicon, a.glyphicon:hover {
+    color: black;
+    text-decoration: none;
+}
+
+div.odd {
+    background-color: lightgray;
+}
+
+div.even {
+    background-color: darkgray;
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
+
+.btn-separated-toolbar .btn {
+    margin-bottom: 5px;
+}

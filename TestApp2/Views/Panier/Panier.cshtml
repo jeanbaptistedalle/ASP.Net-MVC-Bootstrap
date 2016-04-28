@@ -1,5 +1,18 @@
 ﻿@using Microsoft.AspNet.Identity
 @model TestApp2.ViewsModels.Panier.PanierModel
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type="checkbox"].chkSelectionTous').click(function () {
+                var check = $(this).prop("checked");
+                $('input[type="checkbox"].chkSelectionProduit').each(function () {
+                    $(this).prop("checked", check);
+                });
+            });
+        });
+    </script>
+}
 @{
     ViewBag.Title = "Index";
 }
@@ -14,34 +27,54 @@ else
     using (Html.BeginForm("ViderPanier", "Panier", FormMethod.Post))
     {
         <div class="row">
-            <div class="col-xs-2">Selection</div>
-            <div class="col-xs-2">Libelle</div>
-            <div class="col-xs-2">Prix unitaire</div>
-            <div class="col-xs-2">Quantite</div>
-            <div class="col-xs-2">Prix</div>
-            <div class="col-xs-2">Lien</div>
+            <div class="col-xs-2 col-sm-2"><input class="chkSelectionTous" type="checkbox" /> <span class="hidden-xs">Tous</span></div>
+            <div class="col-xs-3 col-sm-2">Libelle</div>
+            <div class="hidden-xs col-sm-2">Prix unitaire</div>
+            <div class="col-xs-2 col-sm-2"><span class="hidden-xs">Quantité</span><span class="visible-xs">Qté</span></div>
+            <div class="col-xs-2 col-sm-2">Prix</div>
+            <div class="col-xs-2 col-sm-2"></div>
         </div>
-        for(int i = 0; i < Model.PanierProduits.Count(); i++)
+        for (int i = 0; i < Model.PanierProduits.Count(); i++)
         {
             PanierProduitDTO produit = Model.PanierProduits[i];
-            <div class="row">
+            int Id = produit.PanierProduit_Id;
+            <div class="row vertical-align @(i % 2 == 1 ? "odd":"even")">
                 @Html.HiddenFor(x => x.PanierProduits[i].PanierProduit_Id)
-                <div class="col-xs-2">@Html.CheckBoxFor(x=>x.PanierProduits[i].selectionne)</div>
-                <div class="col-xs-2">@produit.Libelle</div>
-                <div class="col-xs-2">@produit.Prix €</div>
-                <div class="col-xs-2">@produit.Quantite</div>
-                <div class="col-xs-2">@produit.PrixTotal €</div>
-                <div class="col-xs-2 col-sm-2"><a href="@Url.Action("DeletePanierProduit", "Panier", new { PanierProduit_id = produit.PanierProduit_Id })" class="glyphicon glyphicon-trash"></a></div>
+                <div class="col-xs-2 col-sm-2"><span>@Html.CheckBoxFor(x => x.PanierProduits[i].selectionne, new { @class = "chkSelectionProduit" })</span></div>
+                <div class="col-xs-3 col-sm-2"><span>@produit.Libelle</span></div>
+                <div class="hidden-xs col-sm-2"><span>@produit.Prix €</span></div>
+                <div class="col-xs-2 col-sm-2"><span>@produit.Quantite</span></div>
+                <div class="col-xs-2 col-sm-2"><span>@produit.PrixTotal €</span></div>
+                <div class="hidden-xs col-sm-2"><span><a href="@Url.Action("DeletePanierProduit", "Panier", new { PanierProduit_id = produit.PanierProduit_Id })" class="glyphicon glyphicon-trash"></a></span></div>
+                <div class="visible-xs col-xs-2">
+                    <a href="#panelProduit_@Id" data-toggle="collapse" class="glyphicon glyphicon-plus"></a>
+                </div>
+            </div>
+            <div id="panelProduit_@Id" class="panel-collapse collapse">
+                <div class="panel-body visible-xs">
+                    <label for="panierProduit_@Id">Prix unitaire</label>
+                    <span id="panelProduit_@Id">@produit.Prix €</span>
+                </div>
+                <div class="panel-footer visible-xs">
+                    <span><a href="@Url.Action("AjoutePanierProduit", "Panier", new { PanierProduit_id = produit.PanierProduit_Id })" class="glyphicon glyphicon-plus"></a></span>
+                    <span><a href="@Url.Action("RetirePanierProduit", "Panier", new { PanierProduit_id = produit.PanierProduit_Id })" class="glyphicon glyphicon-minus"></a></span>
+                    <span><a href="@Url.Action("SupprimerPanierProduit", "Panier", new { PanierProduit_id = produit.PanierProduit_Id })" class="glyphicon glyphicon-trash"></a></span>
+                </div>
             </div>
         }
-        <input type="submit" class="btn" value="Supprimer la selection" name="Panier:SupprimerSelection" />
-        <input type="submit" class="btn" value="Vider le panier" name="Panier:ViderPanier" />
+        <br />
+        <div class="btn-separated-toolbar">
+            <input type="submit" class="btn" value="Supprimer la selection" name="Panier:SupprimerSelection" />
+            <input type="submit" class="btn" value="Vider le panier" name="Panier:ViderPanier" />
+        </div>
     }
+    <div class="row hidden-xs">
+        <br />
+    </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12">
             <label for="prixTotal">Total de la commande : </label>
             <span id="prixTotal">@Model.PrixTotal €</span>
         </div>
     </div>
 }
-
