@@ -209,6 +209,7 @@
     <Content Include="Views\Admin\Admin.cshtml" />
     <Content Include="Views\Admin\_LienAdministration.cshtml" />
     <Content Include="Views\Panier\_EmptyPanierProduit.cshtml" />
+    <Content Include="Views\Produit\_BuyProduit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppDbContext.cs" />
@@ -279,6 +280,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestApp2Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ViewsModels\Produit\BuyModalModel.cs" />
     <Compile Include="ViewsModels\Panier\PanierModel.cs" />
     <Compile Include="ViewsModels\Produit\ListeProduitModel.cs" />
     <Compile Include="ViewsModels\Auth\LoginModel.cs" />

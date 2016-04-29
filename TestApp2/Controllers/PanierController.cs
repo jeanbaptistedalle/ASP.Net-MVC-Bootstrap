@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using TestApp2.DAL;
 using Microsoft.AspNet.Identity;
 using TestApp2.ViewsModels.Panier;
+using TestApp2.ViewsModels.Produit;
 
 namespace TestApp2.Controllers
 {
@@ -34,6 +35,14 @@ namespace TestApp2.Controllers
         }
 
         [HttpGet]
+        public PartialViewResult AjoutePanierProduitModal(BuyModalModel model)
+        {
+            PanierDTO panier = DAL_Panier.GetOrCreatePanierByUser(User.Identity.GetUserId());
+            DAL_PanierProduit.AjouterProduit(panier.Panier_Id, model.Produit_Id, model.Quantite);
+            return PartialView("_EmptyPanierProduit");
+        }
+
+        [HttpGet]
         public PartialViewResult AjoutePanierProduit(int PanierProduit_Id)
         {
             PanierProduitDTO p = DAL_PanierProduit.AddQtePanierProduit(PanierProduit_Id, 1);
@@ -53,7 +62,7 @@ namespace TestApp2.Controllers
             PanierProduitDTO p = DAL_PanierProduit.AddQtePanierProduit(PanierProduit_Id, -1);
             if (p == null)
             {
-                return PartialView("_EmptyPanierProduit") ;
+                return PartialView("_EmptyPanierProduit");
             }
             else
             {

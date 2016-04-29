@@ -5,6 +5,25 @@
 
 @section Scripts
 {
+    <script type="text/javascript">
+        /*$(document).ready(function () {
+            $('#divBuyModal').modal({
+                show: 'false',
+            });
+        });*/
+
+        function ShowModal() {
+            $('#divBuyModal').modal("show");
+        }
+
+        function HideModal() {
+            $('#divBuyModal').modal("hide");
+        }
+
+        function Failure() {
+            alert("Erreur !");
+        }
+    </script>
 }
 
 <h2>Liste des produits</h2>
@@ -36,7 +55,27 @@
         </div>
         <div class="col-xs-4 col-sm-3 col-md-3">
             <a href="@Url.Action("Produit", "Produit", new { id=produit.Produit_Id})" class="glyphicon glyphicon-search"></a>
-            <a href="@Url.Action("AcheterProduit", "Produit", new { produit_Id=produit.Produit_Id})" class="glyphicon glyphicon-shopping-cart"></a>
+            @*<a href="@Url.Action("AcheterProduit", "Produit", new { produit_Id=produit.Produit_Id})" class="glyphicon glyphicon-shopping-cart"></a>*@
+            @Ajax.ActionLink(" ",
+                 "AcheterProduit",
+                 "Produit",
+                 new
+                 {
+                     produit_Id = produit.Produit_Id,
+                 },
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "divBuyModal", // <-- DOM element ID to update
+                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                     HttpMethod = "GET", // <-- HTTP method
+                     OnSuccess = "ShowModal",
+                 },
+                 new
+                 {
+                     @class = "glyphicon glyphicon-shopping-cart",
+                 })
         </div>
     </div>
 }
+<div class="modal fade" id="divBuyModal" role="dialog">
+</div>

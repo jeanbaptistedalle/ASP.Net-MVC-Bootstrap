@@ -1,0 +1,53 @@
+﻿@model TestApp2.ViewsModels.Produit.BuyModalModel
+
+<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+
+        @using (Ajax.BeginForm("AjoutePanierProduitModal",
+                 "Panier",
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "divBuyModal", // <-- DOM element ID to update
+                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                     HttpMethod = "GET", // <-- HTTP method
+                     OnSuccess = "HideModal",
+                 }))
+        {
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Acheter le produit @Model.Produit.Libelle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    @Html.HiddenFor(x=>x.Produit_Id)
+                    @Html.LabelFor(x => x.Quantite)
+                    @Html.DropDownListFor(x => x.Quantite, Model.QuantitesDisponibles)
+                </div>
+            </div>
+            <div class="modal-footer">
+            @*@Ajax.ActionLink("Acheter",
+                 "AjoutePanierProduitModal",
+                 "Panier",
+                 new
+                 {
+                     Produit_Id = Model.Produit_Id,
+                     Quantite = Model.Quantite,
+                 },
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "divBuyModal", // <-- DOM element ID to update
+                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                     HttpMethod = "GET", // <-- HTTP method
+                     OnSuccess = "HideModal",
+                 },
+                 new
+                 {
+                     @class = "btn btn-info",
+                     @role = "button",
+                 })*@
+                <button type="submit" class="btn btn-info">Acheter</button>
+                <a href="#" type="button" class="btn btn-default" data-dismiss="modal" onclick="HideModal()">Fermer</a>
+            </div>
+        }
+    </div>
+</div>

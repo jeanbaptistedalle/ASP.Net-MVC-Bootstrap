@@ -24,10 +24,18 @@ namespace TestApp2.Controllers
         }
 
         [HttpGet]
-        public ActionResult AcheterProduit(int produit_Id)
+        public PartialViewResult AcheterProduit(int produit_Id)
         {
-            DAL_Panier.AjouterProduit(User.Identity.GetUserId(), produit_Id, 1);
-            return RedirectToAction("ListeProduit", "Produit");
+            ProduitDTO produit = DAL_Produit.GetProduitById(produit_Id);
+            SelectList list = GetQuantiteSelectList(5);
+            BuyModalModel model = new BuyModalModel()
+            {
+                Produit = produit,
+                Produit_Id = produit_Id,
+                Quantite = 1,
+                QuantitesDisponibles = list,
+            };
+            return PartialView("_BuyProduit", model);
         }
 
         [HttpGet]
