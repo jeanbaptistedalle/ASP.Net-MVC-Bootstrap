@@ -8,14 +8,14 @@
             <li>
                 @Html.ActionLink("Bonjour " + User.Identity.GetUserName(), "Index", "home")
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Se déconnecter</a></li>
+            <li>@Html.ActionLink("Se déconnecter", "Logout","auth")</li>
         </ul>
     </form>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("S’inscrire", "register", "auth", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Se connecter", "lgoin", "auth", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("S’inscrire", "Register", "auth", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Se connecter", "Login", "auth", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

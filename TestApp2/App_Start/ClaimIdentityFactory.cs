@@ -14,7 +14,10 @@ namespace TestApp2.App_Start
         public async override Task<ClaimsIdentity> CreateAsync(UserManager<Utilisateur, string> manager, Utilisateur user, string authenticationType)
         {
             var identity = await base.CreateAsync(manager, user, authenticationType);
-            identity.AddClaim(new Claim(ClaimTypes.Country, user.Country));
+            if (!String.IsNullOrWhiteSpace(user.Country))
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Country, user.Country));
+            }
             return identity;
         }
     }

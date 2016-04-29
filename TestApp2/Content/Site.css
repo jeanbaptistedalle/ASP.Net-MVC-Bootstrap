@@ -38,3 +38,7 @@ div.even {
 .btn-separated-toolbar .btn {
     margin-bottom: 5px;
 }
+
+div.panel-body {
+    background-color: white;
+}

@@ -10,8 +10,7 @@ namespace TestApp2.ViewsModels.Auth
     public class LoginModel
     {
         [Required]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        public string Login { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

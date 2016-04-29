@@ -14,6 +14,7 @@ namespace TestApp2.Controllers
         [HttpGet]
         public ActionResult Panier()
         {
+            Guid guid = Guid.NewGuid();
             PanierDTO panier = DAL_Panier.GetOrCreatePanierByUser(User.Identity.GetUserId());
             PanierModel model = new PanierModel()
             {
@@ -33,26 +34,40 @@ namespace TestApp2.Controllers
         }
 
         [HttpGet]
-        public ActionResult AjoutePanierProduit(int PanierProduit_Id)
+        public PartialViewResult AjoutePanierProduit(int PanierProduit_Id)
         {
-            DAL_PanierProduit.AjoutePanierProduit(PanierProduit_Id, 1);
-            return RedirectToAction("Panier", "Panier");
+            PanierProduitDTO p = DAL_PanierProduit.AddQtePanierProduit(PanierProduit_Id, 1);
+            if (p == null)
+            {
+                return PartialView("_EmptyPanierProduit");
+            }
+            else
+            {
+                return PartialView("_PanierProduit", p);
+            }
         }
 
         [HttpGet]
-        public ActionResult RetirePanierProduit(int PanierProduit_Id)
+        public PartialViewResult RetirePanierProduit(int PanierProduit_Id)
         {
-            DAL_PanierProduit.RetirePanierProduit(PanierProduit_Id, 1);
-            return RedirectToAction("Panier", "Panier");
+            PanierProduitDTO p = DAL_PanierProduit.AddQtePanierProduit(PanierProduit_Id, -1);
+            if (p == null)
+            {
+                return PartialView("_EmptyPanierProduit") ;
+            }
+            else
+            {
+                return PartialView("_PanierProduit", p);
+            }
         }
-        
+
         [HttpGet]
-        public ActionResult SupprimerPanierProduit(int PanierProduit_Id)
+        public PartialViewResult SupprimerPanierProduit(int PanierProduit_Id)
         {
             DAL_PanierProduit.SupprimerPanierProduit(PanierProduit_Id);
-            return RedirectToAction("Panier", "Panier");
+            return PartialView("_EmptyPanierProduit");
         }
-        
+
         [HttpPost]
         [MultipleButton(Name = "Panier", Argument = "SupprimerSelection")]
         public ActionResult SupprimerSelection(PanierModel model)

@@ -41,19 +41,6 @@ namespace TestApp2.DAL
             }
         }
 
-        public static void AjoutePanierProduit(int panierProduit_Id, int qte)
-        {
-            using (var context = new TestApp2Entities())
-            {
-                PanierProduit p = context.PanierProduit.FirstOrDefault(x => x.PanierProduit_Id == panierProduit_Id);
-                if (p != null)
-                {
-                    p.Quantite += qte;
-                    context.SaveChanges();
-                }
-            }
-        }
-
         internal static void SupprimerPanierProduit(int panierProduit_Id)
         {
             using (var context = new TestApp2Entities())
@@ -67,7 +54,7 @@ namespace TestApp2.DAL
             }
         }
 
-        public static void RetirePanierProduit(int panierProduit_Id, int qte)
+        public static PanierProduitDTO AddQtePanierProduit(int panierProduit_Id, int qte)
         {
             using (var context = new TestApp2Entities())
             {
@@ -75,12 +62,19 @@ namespace TestApp2.DAL
                 if (p != null)
                 {
                     p.Quantite += qte;
+                    bool suppr = false;
                     if (p.Quantite <= 0)
                     {
                         context.PanierProduit.Remove(p);
+                        suppr = true;
                     }
                     context.SaveChanges();
+                    if (!suppr)
+                    {
+                        return p.ToDTO();
+                    }
                 }
+                return null;
             }
         }
 

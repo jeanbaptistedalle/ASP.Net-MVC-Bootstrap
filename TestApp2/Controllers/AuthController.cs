@@ -13,7 +13,6 @@ using TestApp2.App_Start;
 
 namespace TestApp2.Controllers
 {
-    [AllowAnonymous]
     public class AuthController : Controller
     {
         private readonly UserManager<Utilisateur> userManager;
@@ -37,6 +36,7 @@ namespace TestApp2.Controllers
             }
             base.Dispose(disposing);
         }
+
         private IAuthenticationManager GetAuthenticationManager()
         {
             var ctx = Request.GetOwinContext();
@@ -44,7 +44,8 @@ namespace TestApp2.Controllers
         }
 
         [HttpGet]
-        public ActionResult LogIn(string returnUrl)
+        [AllowAnonymous]
+        public ActionResult Login(string returnUrl)
         {
             var model = new LoginModel
             {
@@ -55,6 +56,7 @@ namespace TestApp2.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Login(LoginModel model)
         {
             if (!ModelState.IsValid)
@@ -62,7 +64,7 @@ namespace TestApp2.Controllers
                 return View();
             }
 
-            var user = await userManager.FindAsync(model.Email, model.Password);
+            var user = await userManager.FindAsync(model.Login, model.Password);
 
             if (user != null)
             {
@@ -89,7 +91,7 @@ namespace TestApp2.Controllers
             return returnUrl;
         }
 
-        public ActionResult LogOut()
+        public ActionResult Logout()
         {
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
@@ -97,13 +99,16 @@ namespace TestApp2.Controllers
             authManager.SignOut("ApplicationCookie");
             return RedirectToAction("index", "home");
         }
+
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Register(RegisterModel model)
         {
             if (!ModelState.IsValid)
@@ -113,15 +118,16 @@ namespace TestApp2.Controllers
 
             var user = new Utilisateur
             {
-                UserName = model.Email,
+                UserName = model.Login,
+                Email = model.Email,
                 Country = model.Country,
-                Age = model.Age
+                Age = model.Age,
             };
 
-            var result = await userManager.CreateAsync(user, model.Password);
-
+            var result = userManager.Create(user, model.Password);
             if (result.Succeeded)
             {
+                userManager.AddToRole(user.Id, GeneralVariables.Role_Name.Utilisateur);
                 await SignIn(user);
                 return RedirectToAction("index", "home");
             }
@@ -138,9 +144,10 @@ namespace TestApp2.Controllers
         {
             var identity = await userManager.CreateIdentityAsync(
                 user, DefaultAuthenticationTypes.ApplicationCookie);
-
-            identity.AddClaim(new Claim(ClaimTypes.Country, user.Country));
-
+            if (!String.IsNullOrWhiteSpace(user.Country))
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Country, user.Country));
+            }
             GetAuthenticationManager().SignIn(identity);
         }
     }

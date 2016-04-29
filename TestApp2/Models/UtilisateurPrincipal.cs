@@ -20,13 +20,5 @@ namespace TestApp2.Models
                 return this.FindFirst(ClaimTypes.Name).Value;
             }
         }
-
-        public string Country
-        {
-            get
-            {
-                return this.FindFirst(ClaimTypes.Country).Value;
-            }
-        }
     }
 }
