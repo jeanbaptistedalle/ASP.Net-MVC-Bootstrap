@@ -6,11 +6,11 @@
 @section Scripts
 {
     <script type="text/javascript">
-        /*$(document).ready(function () {
-            $('#divBuyModal').modal({
-                show: 'false',
+        $(document).ready(function () {
+            $('#chkFruit').click(function () {
+                this.form.submit();
             });
-        });*/
+        });
 
         function ShowModal() {
             $('#divBuyModal').modal("show");
@@ -24,12 +24,22 @@
             alert("Erreur !");
         }
     </script>
+    <style>
+        img.img-responsive {
+            background-size: cover;
+            height: 3em;
+        }
+    </style>
 }
-
 <h2>Liste des produits</h2>
+@using (Html.BeginForm("ListeProduit", "Produit", new { @class = "form-inline" }))
+{
+    @Html.Label("chkFruit", "Fruit seulement : ")
+    @Html.CheckBox("chkFruit", false, new { @class = "checkbox-inline" })
+}
 <div class="row">
     <div class="col-xs-4 col-sm-3 col-md-3">
-        Id
+        Image
     </div>
     <div class="col-xs-4 col-sm-3 col-md-3">
         Libelle
@@ -45,17 +55,16 @@
 {
     <div class="row">
         <div class="col-xs-4 col-sm-3 col-md-3">
-            @produit.Produit_Id
+            <a href="@Url.Action("Produit", "Produit", new { id=produit.Produit_Id})"><img class="img-thumbnail img-responsive" src="@produit.Image" alt="Pas d\'image pour ce produit" /></a>
         </div>
         <div class="col-xs-4 col-sm-3 col-md-3">
             @produit.Libelle
         </div>
         <div class="hidden-xs col-sm-3 col-md-3">
-            @produit.Prix
+            @produit.Prix €
         </div>
         <div class="col-xs-4 col-sm-3 col-md-3">
             <a href="@Url.Action("Produit", "Produit", new { id=produit.Produit_Id})" class="glyphicon glyphicon-search"></a>
-            @*<a href="@Url.Action("AcheterProduit", "Produit", new { produit_Id=produit.Produit_Id})" class="glyphicon glyphicon-shopping-cart"></a>*@
             @Ajax.ActionLink(" ",
                  "AcheterProduit",
                  "Produit",

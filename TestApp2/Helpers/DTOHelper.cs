@@ -17,6 +17,7 @@ namespace TestApp2
                 Prix = that.Prix,
                 Description = that.Description,
                 Image = that.Image,
+                Fruit = that.Fruit,
             };
             return dto;
         }

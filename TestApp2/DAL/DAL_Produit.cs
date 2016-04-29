@@ -8,11 +8,19 @@ namespace TestApp2.DAL
 {
     public class DAL_Produit
     {
-        public static List<ProduitDTO> GetAll()
+        public static List<ProduitDTO> GetAll(bool fruitOnly)
         {
             using (var context = new TestApp2Entities())
             {
-                List<Produit> produits = context.Produit.OrderBy(x => x.Libelle).ToList();
+                List<Produit> produits;
+                if (fruitOnly)
+                {
+                    produits = context.Produit.Where(x => x.Fruit).OrderBy(x => x.Libelle).ToList();
+                }
+                else
+                {
+                    produits = context.Produit.OrderBy(x => x.Libelle).ToList();
+                }
                 return produits.ToListDTO();
             }
         }

@@ -18,9 +18,19 @@ namespace TestApp2.Controllers
         {
             ListeProduitModel model = new ListeProduitModel()
             {
-                ListeProduit = DAL_Produit.GetAll(),
+                ListeProduit = DAL_Produit.GetAll(false),
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ListeProduit(bool chkFruit)
+        {
+            ListeProduitModel model = new ListeProduitModel()
+            {
+                ListeProduit = DAL_Produit.GetAll(chkFruit),
+            };
+            return View("ListeProduit", model);
         }
 
         [HttpGet]

@@ -13,5 +13,6 @@ namespace TestApp2
         public decimal Prix { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public bool Fruit { get; set; }
     }
 }

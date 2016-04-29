@@ -93,6 +93,7 @@
           <Property Name="Prix" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Image" Type="nvarchar" MaxLength="500" />
+          <Property Name="Fruit" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -387,6 +388,7 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PanierProduit" Relationship="TestApp2Model.FK_PanierProduit_Produit" FromRole="Produit" ToRole="PanierProduit" />
           <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Fruit" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Pannier_User">
           <End Type="TestApp2Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
@@ -516,6 +518,7 @@
           <EntitySetMapping Name="Produit">
             <EntityTypeMapping TypeName="TestApp2Model.Produit">
               <MappingFragment StoreEntitySet="Produit">
+                <ScalarProperty Name="Fruit" ColumnName="Fruit" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Prix" ColumnName="Prix" />

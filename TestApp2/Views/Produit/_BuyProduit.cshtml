@@ -25,26 +25,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-            @*@Ajax.ActionLink("Acheter",
-                 "AjoutePanierProduitModal",
-                 "Panier",
-                 new
-                 {
-                     Produit_Id = Model.Produit_Id,
-                     Quantite = Model.Quantite,
-                 },
-                 new AjaxOptions
-                 {
-                     UpdateTargetId = "divBuyModal", // <-- DOM element ID to update
-                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                     HttpMethod = "GET", // <-- HTTP method
-                     OnSuccess = "HideModal",
-                 },
-                 new
-                 {
-                     @class = "btn btn-info",
-                     @role = "button",
-                 })*@
                 <button type="submit" class="btn btn-info">Acheter</button>
                 <a href="#" type="button" class="btn btn-default" data-dismiss="modal" onclick="HideModal()">Fermer</a>
             </div>
