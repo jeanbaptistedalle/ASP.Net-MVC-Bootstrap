@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace TestApp2.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : _Controller
     {
         public ActionResult Index()
         {

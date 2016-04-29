@@ -8,7 +8,7 @@ using TestApp2.Models;
 
 namespace TestApp2.Controllers
 {
-    public abstract class AppController : Controller
+    public abstract class AppController : _Controller
     {
         public UtilisateurPrincipal CurrentUser
         {

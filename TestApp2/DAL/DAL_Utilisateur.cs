@@ -6,21 +6,20 @@ using TestApp2.Models;
 
 namespace TestApp2.DAL
 {
-    public class DAL_Utilisateur
+    public class DAL_Utilisateur : BaseDAL
     {
-
-        public static AspNetUsers GetUtilisateur(string User_Id)
+        public AspNetUsers GetUtilisateur(string User_Id)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 AspNetUsers user = context.AspNetUsers.FirstOrDefault(x => x.Id == User_Id);
                 return user;
             }
         }
 
-        public static bool IsAdmin(string User_Id)
+        public bool IsAdmin(string User_Id)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 AspNetUsers user = context.AspNetUsers.FirstOrDefault(x => x.Id == User_Id);
                 if (user != null)

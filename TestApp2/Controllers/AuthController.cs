@@ -13,7 +13,7 @@ using TestApp2.App_Start;
 
 namespace TestApp2.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : _Controller
     {
         private readonly UserManager<Utilisateur> userManager;
 

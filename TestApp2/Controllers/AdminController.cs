@@ -8,12 +8,13 @@ using TestApp2.DAL;
 
 namespace TestApp2.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : _Controller
     {
+
         [AllowAnonymous]
         public ActionResult LienAdministration()
         {
-            if (DAL_Utilisateur.IsAdmin(User.Identity.GetUserId()))
+            if (DAL_utilisateur.IsAdmin(User.Identity.GetUserId()))
             {
                 return PartialView("_LienAdministration");
             }

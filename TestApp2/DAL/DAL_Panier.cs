@@ -6,11 +6,11 @@ using TestApp2.Models;
 
 namespace TestApp2.DAL
 {
-    public class DAL_Panier
+    public class DAL_Panier : BaseDAL
     {
-        public static PanierDTO GetOrCreatePanierByUser(string User_Id)
+        public PanierDTO GetOrCreatePanierByUser(string User_Id)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 Panier panier = context.Panier.FirstOrDefault(x => x.User_Id == User_Id);
                 if (panier != null)
@@ -21,9 +21,9 @@ namespace TestApp2.DAL
             }
         }
 
-        public static PanierDTO CreatePanier(string User_Id)
+        public PanierDTO CreatePanier(string User_Id)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 Panier panier = new Panier();
                 panier.User_Id = User_Id;
@@ -31,12 +31,6 @@ namespace TestApp2.DAL
                 context.SaveChanges();
                 return panier.ToDTO();
             }
-        }
-
-        public static void AjouterProduit(string User_Id, int produit_Id, int quantiteSelectionnee)
-        {
-            PanierDTO panier = GetOrCreatePanierByUser(User_Id);
-            DAL_PanierProduit.AjouterProduit(panier.Panier_Id, produit_Id, quantiteSelectionnee);
         }
     }
 }

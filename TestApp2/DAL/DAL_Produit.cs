@@ -6,11 +6,11 @@ using TestApp2.Models;
 
 namespace TestApp2.DAL
 {
-    public class DAL_Produit
+    public class DAL_Produit : BaseDAL
     {
-        public static List<ProduitDTO> GetAll(bool fruitOnly)
+        public List<ProduitDTO> GetAll(bool fruitOnly)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 List<Produit> produits;
                 if (fruitOnly)
@@ -25,9 +25,9 @@ namespace TestApp2.DAL
             }
         }
 
-        public static ProduitDTO GetProduitById(int id)
+        public ProduitDTO GetProduitById(int id)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 Produit produit = context.Produit.FirstOrDefault(x => x.Produit_Id == id);
                 if (produit != null)

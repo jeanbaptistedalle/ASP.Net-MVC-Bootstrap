@@ -11,14 +11,14 @@ using Microsoft.AspNet.Identity;
 
 namespace TestApp2.Controllers
 {
-    public class ProduitController : Controller
+    public class ProduitController : _Controller
     {
         [HttpGet]
         public ActionResult ListeProduit()
         {
             ListeProduitModel model = new ListeProduitModel()
             {
-                ListeProduit = DAL_Produit.GetAll(false),
+                ListeProduit = DAL_produit.GetAll(false),
             };
             return View(model);
         }
@@ -28,7 +28,7 @@ namespace TestApp2.Controllers
         {
             ListeProduitModel model = new ListeProduitModel()
             {
-                ListeProduit = DAL_Produit.GetAll(chkFruit),
+                ListeProduit = DAL_produit.GetAll(chkFruit),
             };
             return View("ListeProduit", model);
         }
@@ -36,7 +36,7 @@ namespace TestApp2.Controllers
         [HttpGet]
         public PartialViewResult AcheterProduit(int produit_Id)
         {
-            ProduitDTO produit = DAL_Produit.GetProduitById(produit_Id);
+            ProduitDTO produit = DAL_produit.GetProduitById(produit_Id);
             SelectList list = GetQuantiteSelectList(5);
             BuyModalModel model = new BuyModalModel()
             {
@@ -55,7 +55,7 @@ namespace TestApp2.Controllers
             {
                 return RedirectToAction("ListeProduit", "Produit");
             }
-            ProduitDTO produit = DAL_Produit.GetProduitById(id.Value);
+            ProduitDTO produit = DAL_produit.GetProduitById(id.Value);
             if (produit == null)
             {
                 return RedirectToAction("ListeProduit", "Produit");
@@ -88,7 +88,8 @@ namespace TestApp2.Controllers
         [HttpPost]
         public ActionResult Produit(ProduitModel model)
         {
-            DAL_Panier.AjouterProduit(User.Identity.GetUserId(), model.produit_Id, model.quantiteSelectionnee);
+            PanierDTO panier = DAL_panier.GetOrCreatePanierByUser(User.Identity.GetUserId());
+            DAL_panierProduit.AjouterProduit(panier.Panier_Id, model.produit_Id, model.quantiteSelectionnee);
             return RedirectToAction("Produit", "Produit", new { id = model.produit_Id });
         }
     }

@@ -6,11 +6,11 @@ using TestApp2.Models;
 
 namespace TestApp2.DAL
 {
-    public class DAL_PanierProduit
+    public class DAL_PanierProduit : _DAL
     {
-        public static void AjouterProduit(int Panier_Id, int produit_Id, int quantiteSelectionnee)
+        public void AjouterProduit(int Panier_Id, int produit_Id, int quantiteSelectionnee)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 PanierProduit panierProduit = context.PanierProduit.FirstOrDefault(x => x.Panier_Id == Panier_Id && x.Produit_Id == produit_Id);
                 if (panierProduit == null)
@@ -28,9 +28,9 @@ namespace TestApp2.DAL
             }
         }
 
-        public static void ViderPanier(string User_Id)
+        public void ViderPanier(string User_Id)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 Panier panier = context.Panier.FirstOrDefault(x => x.User_Id == User_Id);
                 if (panier != null)
@@ -41,9 +41,9 @@ namespace TestApp2.DAL
             }
         }
 
-        internal static void SupprimerPanierProduit(int panierProduit_Id)
+        public void SupprimerPanierProduit(int panierProduit_Id)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 PanierProduit p = context.PanierProduit.FirstOrDefault(x => x.PanierProduit_Id == panierProduit_Id);
                 if (p != null)
@@ -54,9 +54,9 @@ namespace TestApp2.DAL
             }
         }
 
-        public static PanierProduitDTO AddQtePanierProduit(int panierProduit_Id, int qte)
+        public PanierProduitDTO AddQtePanierProduit(int panierProduit_Id, int qte)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 PanierProduit p = context.PanierProduit.FirstOrDefault(x => x.PanierProduit_Id == panierProduit_Id);
                 if (p != null)
@@ -78,9 +78,9 @@ namespace TestApp2.DAL
             }
         }
 
-        public static void Supprimer(List<int> PanierProduit_Ids)
+        public void Supprimer(List<int> PanierProduit_Ids)
         {
-            using (var context = new TestApp2Entities())
+            using (var context = base.GetContext())
             {
                 foreach (int PanierProduit_Id in PanierProduit_Ids)
                 {
