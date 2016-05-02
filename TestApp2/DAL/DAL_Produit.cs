@@ -6,7 +6,7 @@ using TestApp2.Models;
 
 namespace TestApp2.DAL
 {
-    public class DAL_Produit : BaseDAL
+    public class DAL_Produit : _DAL
     {
         public List<ProduitDTO> GetAll(bool fruitOnly)
         {

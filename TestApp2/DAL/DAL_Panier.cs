@@ -6,7 +6,7 @@ using TestApp2.Models;
 
 namespace TestApp2.DAL
 {
-    public class DAL_Panier : BaseDAL
+    public class DAL_Panier : _DAL
     {
         public PanierDTO GetOrCreatePanierByUser(string User_Id)
         {

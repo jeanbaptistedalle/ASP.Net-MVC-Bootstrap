@@ -6,7 +6,7 @@ using TestApp2.Models;
 
 namespace TestApp2.DAL
 {
-    public class DAL_Utilisateur : BaseDAL
+    public class DAL_Utilisateur : _DAL
     {
         public AspNetUsers GetUtilisateur(string User_Id)
         {

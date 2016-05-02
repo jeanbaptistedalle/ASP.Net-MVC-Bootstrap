@@ -221,9 +221,11 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\_Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PanierController.cs" />
     <Compile Include="Controllers\ProduitController.cs" />
+    <Compile Include="DAL\_DAL.cs" />
     <Compile Include="DAL\DAL_Panier.cs" />
     <Compile Include="DAL\DAL_PanierProduit.cs" />
     <Compile Include="DAL\DAL_Produit.cs" />
